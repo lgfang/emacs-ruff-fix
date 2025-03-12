@@ -1,0 +1,51 @@
+* Ruff-fix
+
+This Emacs package provides several commands and a minor mode to fix linting
+errors using [[https://docs.astral.sh/ruff/][Ruff]]. For code reformatting, use the package =ruff-format=. Both
+packages are recommended for a complete workflow.
+
+* Installation
+
+This package is not yet available on [[http://melpa.org/][MELPA]]. To install, clone this repository
+manually or use =straight.el= or similar tools.
+
+The following example assumes the package is cloned into =~/.emacs.d/downloads=
+and uses =use-package=.
+
+#+begin_src emacs-lisp
+  (use-package ruff-fix
+    :load-path "~/.emacs.d/downloads/emacs-ruff-fix"
+    :delight ruff-fix-on-save-mode
+    :after reformatter
+    :hook ((python-mode python-ts-mode) . ruff-fix-on-save-mode)
+    )
+#+end_src
+
+* Customisation
+
+By default the =ruff-fix-*= commands run =ruff check --fix ...=. You can
+customize the following:
+- =ruff-binary= :: Set the absolute path to the =ruff= binary if it is not in
+  your system PATH.
+- =ruff-command= :: A list of strings passed to ruff as arguments. Default is
+  ='("check" "--fix")=.
+
+Below is an example:
+#+begin_src emacs-lisp
+  (use-package ruff-fix
+    :load-path "~/.emacs.d/downloads/emacs-ruff-fix"
+    :delight ruff-fix-on-save-mode
+    :after reformatter
+    :hook ((python-mode python-ts-mode) . ruff-fix-on-save-mode)
+    :custom
+    (ruff-binary "/absolute/path/to/ruff")
+    (ruff-command '("check" "--diff" "--unsafe-fixes"))
+    )
+#+end_src
+
+* TODOs
+- [ ] Add to MELPA
+
+* License
+
+SPDX-License-Identifier: GPL-3.0-or-later
